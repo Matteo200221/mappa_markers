@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mappa_indicatore/ui/controller/camera_controller.dart';
@@ -26,8 +25,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<CustomMarker> listaMarkers = [];
   late GoogleMapController mapController;
-  late Future<Position>
-      _localizationFuture; // Salvo la variabile riempita per non dover ogni volta ricaricare la funzione
+  late Future<Position> _localizationFuture;
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -36,8 +34,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _localizationFuture =
-        getLocalization(); // Quando iizializzo il componente questa variabile viene riempita
+    _localizationFuture = getLocalization();
     loadMarkers();
   }
 
@@ -61,32 +58,33 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFF2A3C56), // Colore aggiornato
         automaticallyImplyLeading: false,
         actions: loginProvider.token.isNotEmpty
             ? [
-                IconButton(
-                  icon: const Icon(Icons.logout),
-                  onPressed: () {
-                    loginProvider.token = '';
-                    Get.offAllNamed('/');
-                  },
-                ),
-              ]
+          IconButton(
+            icon: const Icon(Icons.logout),
+            color: Colors.white,
+            onPressed: () {
+              loginProvider.token = '';
+              Get.offAllNamed('/');
+            },
+          ),
+        ]
             : [
-                IconButton(
-                  icon: const Icon(Icons.login),
-                  onPressed: () {
-                    loginProvider.token = '';
-                    Get.toNamed('/login');
-                  },
-                )
-              ],
+          IconButton(
+            icon: const Icon(Icons.login),
+            color: Colors.white,
+            onPressed: () {
+              loginProvider.token = '';
+              Get.toNamed('/login');
+            },
+          )
+        ],
       ),
-      backgroundColor: Colors.black54,
+      backgroundColor: Colors.white, // Sfondo bianco
       body: FutureBuilder<Position>(
         future: _localizationFuture,
-        // Utilizzo la variabile in modo tale che solo all'init faccia partire la funzione una volta piena la variabile avrà semrpe un data
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -106,27 +104,28 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     height: 300,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(30), // Bordo arrotondato
+                      color: Colors.grey.shade200, // Colore di sfondo per contrasto
                     ),
-                    child: GoogleMap(
-                      onMapCreated: _onMapCreated,
-                      onTap: loginProvider.token.isNotEmpty
-                          ? (LatLng value) async {
-                              dialogTakeImage.dialogBuilder(
-                                  context,
-                                  value,
-                              listaMarkers,
-                              setState);
-                            }
-                          : null,
-                      myLocationEnabled: true,
-                      initialCameraPosition: CameraPosition(
-                        target: posizioneGeo,
-                        zoom: 11.0,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: GoogleMap(
+                        onMapCreated: _onMapCreated,
+                        onTap: loginProvider.token.isNotEmpty
+                            ? (LatLng value) async {
+                          dialogTakeImage.dialogBuilder(
+                              context, value, listaMarkers, setState);
+                        }
+                            : null,
+                        myLocationEnabled: true,
+                        initialCameraPosition: CameraPosition(
+                          target: posizioneGeo,
+                          zoom: 11.0,
+                        ),
+                        markers: listaMarkers
+                            .map((customMarker) => customMarker.marker)
+                            .toSet(),
                       ),
-                      markers: listaMarkers
-                          .map((customMarker) => customMarker.marker)
-                          .toSet(),
                     ),
                   ),
                 ),
@@ -138,35 +137,38 @@ class _HomePageState extends State<HomePage> {
                       return Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          color: Colors.blue.shade50, // Colore card chiaro
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: ListTile(
-                              leading:
-                                  Image.network(listaMarkers[index].imageUrl),
-                              title: Text('Marker ${index + 1}'),
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(listaMarkers[index].imageUrl),
+                              ),
+                              title: Text(
+                                'Marker ${index + 1}',
+                                style: TextStyle(
+                                  color: const Color(0xFF2A3C56), // Colore del testo aggiornato
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               onTap: () {
                                 mapController.animateCamera(
-                                    CameraUpdate.newCameraPosition(
-                                  CameraPosition(
-                                    target: listaMarkers[index].marker.position,
-                                    zoom: 11,
+                                  CameraUpdate.newCameraPosition(
+                                    CameraPosition(
+                                      target: listaMarkers[index].marker.position,
+                                      zoom: 11,
+                                    ),
                                   ),
-                                ));
+                                );
                               },
                               subtitle: Text(
-                                  'Lat: ${listaMarkers[index].marker.position.latitude}, Lng: ${listaMarkers[index].marker.position.longitude}'),
-                              //     trailing: loginProvider.token.isNotEmpty
-                              //   ? IconButton(
-                              //   icon: const Icon(Icons.delete),
-                              //   onPressed: () async {
-                              //     await deleteImage(listaMarkers[index].imageUrl);
-                              //     await deleteMarker(listaMarkers[index].marker.markerId.value);
-                              //     setState(() {
-                              //       listaMarkers.removeAt(index);
-                              //     });
-                              //   },
-                              // )
-                              //       : null,
+                                'Lat: ${listaMarkers[index].marker.position.latitude}, Lng: ${listaMarkers[index].marker.position.longitude}',
+                                style: TextStyle(color: Colors.blueGrey), // Sottotitolo
+                              ),
                             ),
                           ),
                         ),

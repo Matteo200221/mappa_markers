@@ -22,62 +22,45 @@ class Login extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFF2A3C56),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+        elevation: 0,
       ),
-      backgroundColor: Colors.black54,
+      backgroundColor: Colors.white, // Sfondo bianco
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Form(
             key: formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(height: 40),
                 Image.network(
-                  'https://images-ext-1.discordapp.net/external/a_6q7uwHEXYKFKwYmRv6b5LxVbDeXo9NvWuridGbSYo/https/upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png?format=webp&quality=lossless&width=670&height=670',
-                  width: 150,
+                  'https://media.glassdoor.com/sqll/6356750/digitality-consulting-s-r-l-squarelogo-1647509960651.png',
+                  width: 110,
                 ),
-                SizedBox(height: 30),
-                // Row to hold buttons side by side
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4A90A4),
-                  ),
-                  onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-                      callController.loginToken.value =
-                          await callController.login(
-                              loginController.username.value,
-                              loginController.password.value);
-                      if (callController.loginToken.value.isNotEmpty &&
-                          loginController.password.value == 'admin' &&
-                          loginController.password.value == 'admin') {
-                        localizationProvider.geolocalization =
-                            await determinePosition();
-                        loginProvider.token = callController.loginToken.value;
-                        Get.toNamed('/');
-                      } else {
-                        Get.snackbar(
-                          'Errore di Login',
-                          'Email o password non validi',
-                          snackPosition: SnackPosition.TOP,
-                          backgroundColor: Colors.red,
-                          colorText: Colors.white,
-                          margin: const EdgeInsets.all(10),
-                        );
-                      }
-                    }
-                  },
-                  child: const Text('Login', style: TextStyle(color: Colors.white),),
-                ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 40),
+                // Casella di testo per l'username
                 TextFormField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Username',
-                    labelStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(),
+                    labelStyle: const TextStyle(color: Colors.black),
+                    fillColor: const Color(0xFFDFE6EF),
+                    filled: true,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0), // Casella più grande
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30), // Forme ovali
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30), // Forme ovali
+                      borderSide: BorderSide(color: Colors.blue.shade300),
+                    ),
                   ),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Inserire dati completi';
@@ -88,14 +71,25 @@ class Login extends StatelessWidget {
                     loginController.username.value = value!;
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
+                // Casella di testo per la password
                 TextFormField(
-                  decoration: const InputDecoration(
-                    labelStyle: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(),
+                    labelStyle: const TextStyle(color: Colors.black),
+                    fillColor: const Color(0xFFDFE6EF),
+                    filled: true,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0), // Casella più grande
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30), // Forme ovali
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30), // Forme ovali
+                      borderSide: BorderSide(color: Colors.blue.shade300),
+                    ),
                   ),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -107,7 +101,67 @@ class Login extends StatelessWidget {
                     loginController.password.value = value!;
                   },
                 ),
+                const SizedBox(height: 30),
+                // Pulsante di login più lungo e ovale
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4A90A4),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 100.0), // Pulsante più lungo
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30), // Forme ovali
+                    ),
+                  ),
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+                      callController.loginToken.value =
+                      await callController.login(
+                          loginController.username.value,
+                          loginController.password.value);
+                      if (callController.loginToken.value.isNotEmpty &&
+                          loginController.password.value == 'admin' &&
+                          loginController.password.value == 'admin') {
+                        localizationProvider.geolocalization =
+                        await determinePosition();
+                        loginProvider.token = callController.loginToken.value;
+                        Get.toNamed('/');
+                      } else {
+                        Get.snackbar(
+                          'Errore di Login',
+                          'Username o password non validi',
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: Colors.red,
+                          colorText: Colors.white,
+                          margin: const EdgeInsets.all(10),
+                        );
+                      }
+                    }
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                ),
                 const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    // Azione per password dimenticata
+                  },
+                  child: const Text(
+                    'Password dimenticata?',
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                GestureDetector(
+                  onTap: () {
+                    // Azione per registrati
+                  },
+                  child: const Text(
+                    'Registrati',
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                ),
               ],
             ),
           ),
