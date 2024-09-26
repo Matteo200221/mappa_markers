@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF2A3C56), // Colore aggiornato
+        backgroundColor: const Color(0xFF2A3C56),
         automaticallyImplyLeading: false,
         actions: loginProvider.token.isNotEmpty
             ? [
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      backgroundColor: Colors.white, // Sfondo bianco
+      backgroundColor: Colors.white,
       body: FutureBuilder<Position>(
         future: _localizationFuture,
         builder: (context, snapshot) {
@@ -104,8 +104,8 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     height: 300,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30), // Bordo arrotondato
-                      color: Colors.grey.shade200, // Colore di sfondo per contrasto
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.grey.shade200,
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30),
@@ -134,6 +134,7 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                     itemCount: listaMarkers.length,
                     itemBuilder: (context, index) {
+
                       return Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Card(
@@ -151,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                               title: Text(
                                 'Marker ${index + 1}',
                                 style: TextStyle(
-                                  color: const Color(0xFF2A3C56), // Colore del testo aggiornato
+                                  color: const Color(0xFF2A3C56),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -167,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                               },
                               subtitle: Text(
                                 'Lat: ${listaMarkers[index].marker.position.latitude}, Lng: ${listaMarkers[index].marker.position.longitude}',
-                                style: TextStyle(color: Colors.blueGrey), // Sottotitolo
+                                style: TextStyle(color: Colors.blueGrey),
                               ),
                             ),
                           ),

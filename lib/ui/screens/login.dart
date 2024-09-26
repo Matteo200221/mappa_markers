@@ -28,7 +28,7 @@ class Login extends StatelessWidget {
         ),
         elevation: 0,
       ),
-      backgroundColor: Colors.white, // Sfondo bianco
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -43,20 +43,20 @@ class Login extends StatelessWidget {
                   width: 110,
                 ),
                 const SizedBox(height: 40),
-                // Casella di testo per l'username
+
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Username',
                     labelStyle: const TextStyle(color: Colors.black),
                     fillColor: const Color(0xFFDFE6EF),
                     filled: true,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0), // Casella più grande
+                    contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30), // Forme ovali
+                      borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide(color: Colors.grey.shade300),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30), // Forme ovali
+                      borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide(color: Colors.blue.shade300),
                     ),
                   ),
@@ -72,7 +72,7 @@ class Login extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                // Casella di testo per la password
+
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Password',
@@ -81,11 +81,11 @@ class Login extends StatelessWidget {
                     filled: true,
                     contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0), // Casella più grande
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30), // Forme ovali
+                      borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide(color: Colors.grey.shade300),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30), // Forme ovali
+                      borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide(color: Colors.blue.shade300),
                     ),
                   ),
@@ -102,13 +102,13 @@ class Login extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 30),
-                // Pulsante di login più lungo e ovale
+
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4A90A4),
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 100.0), // Pulsante più lungo
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 100.0),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30), // Forme ovali
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   onPressed: () async {
@@ -145,7 +145,7 @@ class Login extends StatelessWidget {
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    // Azione per password dimenticata
+
                   },
                   child: const Text(
                     'Password dimenticata?',
@@ -155,7 +155,7 @@ class Login extends StatelessWidget {
                 const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
-                    // Azione per registrati
+
                   },
                   child: const Text(
                     'Registrati',
