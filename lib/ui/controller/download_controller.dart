@@ -19,7 +19,7 @@ Future<List<CustomMarker>> downloadMarkers() async{
         marker: Marker(
           markerId: MarkerId(document.id),
           position: position,
-        ), imageUrl: imageUrl
+        ), imageUrl: imageUrl, titolo: '', descrizione: ''
       )
     );
   }
