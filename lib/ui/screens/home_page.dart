@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                                       zoom: 11,
                                     ),
                                   ),
-                                ));
+                                );
                               },
                               subtitle: Text(listaMarkers[index].descrizione),
                             ),
