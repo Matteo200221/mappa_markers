@@ -11,6 +11,7 @@ import 'package:mappa_indicatore/ui/controller/download_controller.dart';
 import 'package:mappa_indicatore/ui/controller/upload_controller.dart';
 import 'package:mappa_indicatore/ui/models/custom_marker.dart';
 import 'package:mappa_indicatore/ui/providers/login_provider.dart';
+import 'package:mappa_indicatore/ui/utility/dialog_image.dart';
 import 'package:mappa_indicatore/ui/utility/dialog_take_image.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<CustomMarker> listaMarkers = [];
   late GoogleMapController mapController;
-  late Future<Position> _localizationFuture;
+  late Future<Position>
+      _localizationFuture; // Salvo la variabile riempita per non dover ogni volta ricaricare la funzione
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -34,7 +36,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _localizationFuture = getLocalization();
+    _localizationFuture =
+        getLocalization(); // Quando iizializzo il componente questa variabile viene riempita
     loadMarkers();
   }
 
@@ -145,17 +148,13 @@ class _HomePageState extends State<HomePage> {
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: ListTile(
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(listaMarkers[index].imageUrl),
+                              trailing  : GestureDetector(
+                                onTap: () {
+                                  DialogImage().dialogBuilder(context, listaMarkers[index].imageUrl);
+                                },
+                                child: Image.network(listaMarkers[index].imageUrl.first),
                               ),
-                              title: Text(
-                                'Marker ${index + 1}',
-                                style: TextStyle(
-                                  color: const Color(0xFF2A3C56),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              title: Text(listaMarkers[index].titolo),
                               onTap: () {
                                 mapController.animateCamera(
                                   CameraUpdate.newCameraPosition(
@@ -164,12 +163,9 @@ class _HomePageState extends State<HomePage> {
                                       zoom: 11,
                                     ),
                                   ),
-                                );
+                                ));
                               },
-                              subtitle: Text(
-                                'Lat: ${listaMarkers[index].marker.position.latitude}, Lng: ${listaMarkers[index].marker.position.longitude}',
-                                style: TextStyle(color: Colors.blueGrey),
-                              ),
+                              subtitle: Text(listaMarkers[index].descrizione),
                             ),
                           ),
                         ),

@@ -21,7 +21,7 @@ Future<String> uploadImage (File imageFile) async {
   
 }
 
-Future<void> uploadMarker (LatLng position, String imageUrl) async {
+Future<void> uploadMarker (LatLng position, List<String> imageUrl, String titolo, String descrizione) async {
 
   try{
     final markersCollection = FirebaseFirestore.instance.collection('matteo_markers');
@@ -30,7 +30,11 @@ Future<void> uploadMarker (LatLng position, String imageUrl) async {
       'latitude': position.latitude,
       'longitude': position.longitude,
       'imageUrl': imageUrl,
+      'titolo': titolo,
+      'descrizione': descrizione,
     });
+
+    print('iserimento fatto');
     
   } catch (e) {
     print('errore salvataggio marker $e');
