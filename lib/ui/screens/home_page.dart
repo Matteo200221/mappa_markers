@@ -12,6 +12,7 @@ import 'package:mappa_indicatore/ui/controller/download_controller.dart';
 import 'package:mappa_indicatore/ui/controller/upload_controller.dart';
 import 'package:mappa_indicatore/ui/models/custom_marker.dart';
 import 'package:mappa_indicatore/ui/providers/login_provider.dart';
+import 'package:mappa_indicatore/ui/utility/dialog_image.dart';
 import 'package:mappa_indicatore/ui/utility/dialog_take_image.dart';
 import 'package:provider/provider.dart';
 
@@ -141,9 +142,13 @@ class _HomePageState extends State<HomePage> {
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: ListTile(
-                              leading:
-                                  Image.network(listaMarkers[index].imageUrl),
-                              title: Text('Marker ${index + 1}'),
+                              trailing  : GestureDetector(
+                                onTap: () {
+                                  DialogImage().dialogBuilder(context, listaMarkers[index].imageUrl);
+                                },
+                                child: Image.network(listaMarkers[index].imageUrl.first),
+                              ),
+                              title: Text(listaMarkers[index].titolo),
                               onTap: () {
                                 mapController.animateCamera(
                                     CameraUpdate.newCameraPosition(
@@ -153,20 +158,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ));
                               },
-                              subtitle: Text(
-                                  'Lat: ${listaMarkers[index].marker.position.latitude}, Lng: ${listaMarkers[index].marker.position.longitude}'),
-                              //     trailing: loginProvider.token.isNotEmpty
-                              //   ? IconButton(
-                              //   icon: const Icon(Icons.delete),
-                              //   onPressed: () async {
-                              //     await deleteImage(listaMarkers[index].imageUrl);
-                              //     await deleteMarker(listaMarkers[index].marker.markerId.value);
-                              //     setState(() {
-                              //       listaMarkers.removeAt(index);
-                              //     });
-                              //   },
-                              // )
-                              //       : null,
+                              subtitle: Text(listaMarkers[index].descrizione),
                             ),
                           ),
                         ),

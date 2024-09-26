@@ -2,7 +2,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CustomMarker {
   Marker marker;
-  String imageUrl; // lista di stringhe
+  List<String> imageUrl; // lista di stringhe
   String titolo;
   String descrizione;
 
