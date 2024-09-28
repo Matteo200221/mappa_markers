@@ -96,11 +96,9 @@ class _HomePageState extends State<HomePage> {
               localizationProvider.geolocalization!.longitude,
             );
           } else {
-            // Se non è possibile ottenere la geolocalizzazione, uso Palermo come fallback
             posizioneGeo = const LatLng(38.116669, 13.366667);
           }
 
-          // La logica della UI è unificata qui, indipendentemente dall'esito della geolocalizzazione
           return Column(
             children: [
               Padding(
@@ -144,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        color: Colors.blue.shade50, // Colore card chiaro
+                        color: Colors.blue.shade50,
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: ListTile(
